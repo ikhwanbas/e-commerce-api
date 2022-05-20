@@ -1,0 +1,125 @@
+definitions:
+  models.Carts:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      payment_status:
+        type: string
+      productsID:
+        type: integer
+      quantity:
+        type: string
+      updated_at:
+        type: string
+      usersID:
+        type: integer
+    type: object
+  models.LoginInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.RegisterInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Users:
+    properties:
+      cartsID:
+        description: db migration
+        items:
+          $ref: '#/definitions/models.Carts'
+        type: array
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+      usersProfile:
+        $ref: '#/definitions/models.UsersProfile'
+    type: object
+  models.UsersProfile:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      created_at:
+        type: string
+      fullname:
+        type: string
+      id:
+        type: integer
+      phone_number:
+        type: integer
+      postal_code:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+paths:
+  /login:
+    post:
+      description: Logging in to get jwt token to access api by roles user.
+      parameters:
+      - description: the body to login a user
+        in: body
+        name: type
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login as a user.
+      tags:
+      - Login User
+  /user:
+    post:
+      description: Registering a new User.
+      parameters:
+      - description: the body to register a new user
+        in: body
+        name: type
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Users'
+      summary: Register New User.
+      tags:
+      - Register User
+swagger: "2.0"
